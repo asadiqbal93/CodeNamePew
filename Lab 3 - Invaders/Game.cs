@@ -40,7 +40,18 @@ namespace Lab_3___Invaders
 
         Font messageFont = new Font(FontFamily.GenericMonospace, 50, FontStyle.Bold);
         Font statsFont = new Font(FontFamily.GenericMonospace, 12);
-        
+
+        // *************************************** LOAD SOUNDS  **********************************************
+        //This SoundPlayer plays a sound whenever the player fires from the playerShip
+        System.Media.SoundPlayer fireSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\shoot.wav");
+        // This SoundPlayer plays a sound when the game ends 
+        System.Media.SoundPlayer gameOverSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\gameover.wav");
+        // This SoundPlayer plays a sound when the Game is over
+        System.Media.SoundPlayer playerShipDeadSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\explosion.wav");
+        // This SoundPlayer plays a sound when the Game starts at the main menu
+        System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
+        // ***************************************************************************************************
+
         public Game(Random random, Rectangle formArea)
         {
             this.formArea = formArea;
@@ -122,6 +133,8 @@ namespace Lab_3___Invaders
                         , playerShip.Location.Y),
                     Direction.Up, formArea);
                 playerShots.Add(newShot);
+                // Asad: Sound Player plays the sound of shooting from the PlayerShip
+                fireSoundPlayer.Play();
             }
         }
 
@@ -273,6 +286,8 @@ namespace Lab_3___Invaders
                     playerShip.Alive = false;
                     if (livesLeft == 0)
                         GameOver(this, null);
+                    // Asad : Sound Player plays the sound once the playerShip is killed
+                    playerShipDeadSoundPlayer.Play();
                     // worth checking for gameOver state here too?
                 }
             }
