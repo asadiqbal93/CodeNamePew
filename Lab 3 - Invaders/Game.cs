@@ -104,7 +104,10 @@ namespace Lab_3___Invaders
                 statsFont, Brushes.Yellow, waveLocation);
             if (gameOver)
             {
+                // Asad : Once game is over play Game OVER sound , for some reason it has major delay and only initiates sound player when game is restarted??
+                gameOverSoundPlayer.Play();
                 graphics.DrawImage(gameOverGraphic, uiRect);
+                
             }
 
         }
@@ -357,5 +360,6 @@ namespace Lab_3___Invaders
         }
 
         public event EventHandler GameOver;
+
     }
 }
