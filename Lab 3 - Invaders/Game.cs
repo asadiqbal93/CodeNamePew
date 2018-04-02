@@ -33,24 +33,32 @@ namespace Lab_3___Invaders
         private PointF livesLocation;
         private PointF waveLocation;
 
+        private RectangleF uiRect;
+
+        private Bitmap ui;
+        private Bitmap gameOverGraphic;
+
         Font messageFont = new Font(FontFamily.GenericMonospace, 50, FontStyle.Bold);
-        Font statsFont = new Font(FontFamily.GenericMonospace, 15);
+        Font statsFont = new Font(FontFamily.GenericMonospace, 12);
         
         public Game(Random random, Rectangle formArea)
         {
             this.formArea = formArea;
             this.random = random;
             stars = new Stars(random, formArea);
-            scoreLocation = new PointF((formArea.Left + 5.0F), (formArea.Top + 5.0F));
-            livesLocation = new PointF((formArea.Right - 120.0F), (formArea.Top + 5.0F));
-            waveLocation = new PointF((formArea.Left + 5.0F), (formArea.Top + 25.0F));
+            scoreLocation = new PointF((formArea.Left + 240.0F), (formArea.Top + 15.0F));
+            livesLocation = new PointF((formArea.Right - 410.0F), (formArea.Top + 15.0F));
+            waveLocation = new PointF((formArea.Left + 145.0F), (formArea.Top + 15.0F));
+            uiRect = new RectangleF(formArea.Left, formArea.Top, formArea.Width, formArea.Height);
             playerShip = new PlayerShip(formArea, 
                 new Point((formArea.Width / 2), (formArea.Height - 50)));
             playerShots = new List<Shot>();
             invaderShots = new List<Shot>();
             invaders = new List<Invader>();
+            ui = Properties.Resources.GameUI;
+            gameOverGraphic = Properties.Resources.GameOver;
 
-            
+
             nextWave();
         }
 
@@ -68,7 +76,17 @@ namespace Lab_3___Invaders
             foreach (Shot shot in invaderShots)
                 shot.Draw(graphics);
 
-            graphics.DrawString(("Score: " + score.ToString()), 
+            // UI drawing code
+            graphics.DrawImage(ui, uiRect);
+
+            Bitmap ship = Properties.Resources.player;
+
+            for (int l = livesLeft; l <= livesLeft && l >= 1; l--)
+            {
+                graphics.DrawImage(ship, formArea.Right - 330.0F + (30.0F * l), formArea.Top + 15.0F, ship.Width * 0.5F, ship.Height * 0.5F);
+            }
+
+            graphics.DrawString(("Score: " + score.ToString()),
                 statsFont, Brushes.Yellow, scoreLocation);
             graphics.DrawString(("Lives: " + livesLeft.ToString()),
                 statsFont, Brushes.Yellow, livesLocation);
@@ -76,10 +94,9 @@ namespace Lab_3___Invaders
                 statsFont, Brushes.Yellow, waveLocation);
             if (gameOver)
             {
-                graphics.DrawString("GAME OVER", messageFont, Brushes.Red,
-                    (formArea.Width / 4), formArea.Height / 3);
+                graphics.DrawImage(gameOverGraphic, uiRect);
             }
-            
+
         }
 
         // Twinkle (animates stars) is called from the form animation timer
