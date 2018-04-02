@@ -48,8 +48,7 @@ namespace Lab_3___Invaders
         System.Media.SoundPlayer gameOverSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\gameover.wav");
         // This SoundPlayer plays a sound when the Game is over
         System.Media.SoundPlayer playerShipDeadSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\explosion.wav");
-        // This SoundPlayer plays a sound when the Game starts at the main menu
-        System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
+       
         // ***************************************************************************************************
 
         public Game(Random random, Rectangle formArea)

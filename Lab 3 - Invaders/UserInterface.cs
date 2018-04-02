@@ -13,8 +13,10 @@ namespace Lab_3___Invaders
 		public PictureBox menuImg;
 		public PictureBox btnUnmuteImg;
 		public PictureBox btnMuteImg;
+        // This SoundPlayer plays a sound when the Game starts at the main menu
+        System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
 
-		public UserInterface()
+        public UserInterface()
 		{
 			menuImg = new PictureBox();
 			btnUnmuteImg = new PictureBox();
@@ -66,8 +68,11 @@ namespace Lab_3___Invaders
 					image.Controls.Add(btnMute);
 					//Assign into public field
 					btnMuteImg = btnMute;
+                    // Asad : Main menu music added , button not synced yet
+                    mainMenuMusic.Play();
 
-					break;
+
+                    break;
 
 				case 2: //the panel is the acoreboard
 					panel.Name = "scoreBoardMenu";
