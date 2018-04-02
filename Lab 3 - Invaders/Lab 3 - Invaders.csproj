@@ -88,6 +88,7 @@
     <None Include="Resources\mute.png" />
     <None Include="Resources\scoreboardMenu.png" />
     <None Include="Resources\unmute.png" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug1.png" />
