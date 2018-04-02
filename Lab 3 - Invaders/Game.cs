@@ -98,7 +98,7 @@ namespace Lab_3___Invaders
 
         public void FireShot()
         {
-            if (playerShots.Count < 2)
+            if (playerShots.Count < 10) //Lee: Changed from Count < 2, enables more bullets for the player to fire
             {
                 Shot newShot = new Shot(
                     new Point((playerShip.Location.X + (playerShip.image.Width / 2))
@@ -153,7 +153,7 @@ namespace Lab_3___Invaders
                 {
                     var edgeInvaders =
                         from invader in invaders
-                        where invader.Location.X > (formArea.Width - 100)
+                        where invader.Location.X > (formArea.Width - 60)// Lee: Changed formArea.Width - 100, so the invaders move all the way to the right of the screen
                         select invader;
                     if (edgeInvaders.Count() > 0)
                     {
@@ -172,7 +172,7 @@ namespace Lab_3___Invaders
                 {
                     var edgeInvaders =
                         from invader in invaders
-                        where invader.Location.X < 100
+                        where invader.Location.X < 30 //Lee: Changed Location.X < 100, so the invaders move all the way to the left of the screen
                         select invader;
                     if (edgeInvaders.Count() > 0)
                     {
@@ -273,8 +273,13 @@ namespace Lab_3___Invaders
                         score = score + (1 * wave);
                     }
                 }
-                foreach (Invader invader in deadInvaders)
+                foreach (Invader invader in deadInvaders) {
                     invaders.Remove(invader);
+	                if (invader.Area.Contains(shot.Location)) {
+	                	playerShots.Remove(shot);
+	                	return;
+	                }
+                }
             }
             foreach (Shot shot in deadPlayerShots)
                 playerShots.Remove(shot);
@@ -285,7 +290,12 @@ namespace Lab_3___Invaders
         private void nextWave()
         {
             wave++;
-            invaderDirection = Direction.Right;
+            Random rnd = new Random(); //Lee: Created the random generator and the IF-ELSE statement so that when a new wave begins,
+            if (rnd.Next(0,2) == 0) {  // it will start moving either to the left or the right (random).
+            	invaderDirection = Direction.Left;
+            } else {
+            	invaderDirection = Direction.Right;
+            }
             // if the wave is under 7, set frames skipped to 6 - current wave number
             if (wave < 7)
             {
@@ -299,7 +309,7 @@ namespace Lab_3___Invaders
             {
                 ShipType currentInvaderType = (ShipType)x;
                 currentInvaderYSpace += invaderYSpacing;
-                int currentInvaderXSpace = 0;
+                int currentInvaderXSpace = 120; //Lee: Changed this value from 0, so the invaders will start in the middle of the screen
                 for (int y = 0; y < 5; y++)
                 {
                     currentInvaderXSpace += invaderXSpacing;
@@ -309,6 +319,8 @@ namespace Lab_3___Invaders
                     Invader newInvader =
                         new Invader(currentInvaderType, newInvaderPoint, 10);
                     invaders.Add(newInvader);
+                    playerShots.Clear(); //Lee: Added these two lines to ensure that the 
+                    invaderShots.Clear();//map is cleared of bullets when a new wave begins
                 }
             }
         }
