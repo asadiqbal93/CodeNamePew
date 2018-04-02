@@ -13,7 +13,11 @@ namespace Lab_3___Invaders
     {
         public int Frame = 0;
         // The form keeps a reference to a single Game object
-        private Game game;
+		private Game game;
+		private UserInterface uInterface_main = new UserInterface();
+		private UserInterface uInterface_scoreBoard = new UserInterface();
+		private Panel mainMenu = new Panel();
+		private Panel scoreBoardMenu = new Panel();
         public Rectangle FormArea { get { return this.ClientRectangle; } }
         Random random = new Random();
 
@@ -29,7 +33,68 @@ namespace Lab_3___Invaders
             gameOver = false;
             game.GameOver += new EventHandler(game_GameOver);
             animationTimer.Start();
+
+			mainMenu = uInterface_main.CreatePanel(1);
+			scoreBoardMenu = uInterface_scoreBoard.CreatePanel(2);
+
+			Controls.Add(mainMenu);
+			Controls.Add(scoreBoardMenu);
+
+			uInterface_main.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
+			uInterface_main.btnUnmuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
+			uInterface_main.btnMuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
+			uInterface_scoreBoard.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
         }
+
+		private void menuImage_MouseClick(object sender, MouseEventArgs e)
+		{
+			Rectangle btnStart = new Rectangle(343, 367, 108, 44);
+			Rectangle btnScoreBoard = new Rectangle(265, 448, 263, 42);
+			Rectangle btnExit = new Rectangle(357, 535, 83, 45);
+			Rectangle btnBack = new Rectangle(40, 592, 103, 43);
+
+			if (btnStart.Contains(e.Location))
+			{
+				mainMenu.Visible = false;
+				scoreBoardMenu.Visible = false;
+
+				// code to reset the game
+					gameOver = false;
+					game = new Game(random, FormArea);
+					game.GameOver += new EventHandler(game_GameOver);
+					gameTimer.Start();
+			}
+			else if (btnScoreBoard.Contains(e.Location))
+			{
+				mainMenu.Visible = false;
+				scoreBoardMenu.Visible = true;
+			}
+			else if (btnBack.Contains(e.Location))
+			{
+				scoreBoardMenu.Visible = false;
+				mainMenu.Visible = true;
+			}
+			else if (btnExit.Contains(e.Location))
+			{
+				Application.Exit();
+			}
+		}
+
+		private void button_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (sender == uInterface_main.btnUnmuteImg)
+			{
+				//TODO: Mute the sound
+				uInterface_main.btnUnmuteImg.Visible = false;
+				uInterface_main.btnMuteImg.Visible = true;
+			}
+			else if (sender == uInterface_main.btnMuteImg)
+			{
+				//TODO: Unmute the sound
+				uInterface_main.btnUnmuteImg.Visible = true;
+				uInterface_main.btnMuteImg.Visible = false;
+			}
+		}
 
         private void animationTimer_Tick(object sender, EventArgs e)
         {

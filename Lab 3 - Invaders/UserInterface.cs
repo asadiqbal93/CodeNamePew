@@ -89,7 +89,7 @@ namespace Lab_3___Invaders
 			//Assign into public field of this class
 			menuImg = image;
 
-			return panel;l
+			return panel;
 		}
 	}
 }
