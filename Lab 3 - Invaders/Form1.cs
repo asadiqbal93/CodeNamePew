@@ -68,30 +68,36 @@ namespace Lab_3___Invaders
 			Rectangle btnExit = new Rectangle(357, 535, 83, 45);
 			Rectangle btnBack = new Rectangle(40, 592, 103, 43);
 
-			if (btnStart.Contains(e.Location))
+			if (sender == uInterface_main.menuImg)
 			{
-				mainMenu.Visible = false;
-				scoreBoardMenu.Visible = false;
+				if (btnStart.Contains(e.Location))
+				{
+					mainMenu.Visible = false;
+					scoreBoardMenu.Visible = false;
 
-				// code to reset the game
+					// code to reset the game
 					gameOver = false;
 					game = new Game(random, FormArea);
 					game.GameOver += new EventHandler(game_GameOver);
 					gameTimer.Start();
+				}
+				else if (btnScoreBoard.Contains(e.Location))
+				{
+					mainMenu.Visible = false;
+					scoreBoardMenu.Visible = true;
+				}
+				else if (btnExit.Contains(e.Location))
+				{
+					Application.Exit();
+				}
 			}
-			else if (btnScoreBoard.Contains(e.Location))
+			else if (sender == uInterface_scoreBoard.menuImg)
 			{
-				mainMenu.Visible = false;
-				scoreBoardMenu.Visible = true;
-			}
-			else if (btnBack.Contains(e.Location))
-			{
-				scoreBoardMenu.Visible = false;
-				mainMenu.Visible = true;
-			}
-			else if (btnExit.Contains(e.Location))
-			{
-				Application.Exit();
+				if (btnBack.Contains(e.Location))
+				{
+					scoreBoardMenu.Visible = false;
+					mainMenu.Visible = true;
+				}
 			}
 		}
 
