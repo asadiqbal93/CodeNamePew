@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Lab_3___Invaders
 {
@@ -40,6 +41,11 @@ namespace Lab_3___Invaders
 
         Font messageFont = new Font(FontFamily.GenericMonospace, 50, FontStyle.Bold);
         Font statsFont = new Font(FontFamily.GenericMonospace, 12);
+
+		//scoreboard
+		//creating scoreboard text file in current directory to store score;
+		private string path = Path.Combine(Environment.CurrentDirectory, "scoreboard.txt");
+		private List<string> scoreboard = new List<string>();
 
         // *************************************** LOAD SOUNDS  **********************************************
         //This SoundPlayer plays a sound whenever the player fires from the playerShip
@@ -111,6 +117,30 @@ namespace Lab_3___Invaders
             }
 
         }
+
+		//recore score into scoreboard.txt
+		public void Record()
+		{
+			if (!File.Exists(path))
+			{
+				File.WriteAllText(path, score + Environment.NewLine);
+			}
+			else
+			{
+				File.AppendAllText(path, score + Environment.NewLine);
+			}
+
+		}
+
+		public List<string> StoreScores()
+		{
+			scoreboard.AddRange(File.ReadAllLines(path));
+			scoreboard.Reverse();
+
+
+			return scoreboard;
+
+		}
 
         // Twinkle (animates stars) is called from the form animation timer
         public void Twinkle()
