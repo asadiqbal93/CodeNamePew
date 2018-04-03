@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Lab_3___Invaders
 {
@@ -22,6 +23,13 @@ namespace Lab_3___Invaders
         Random random = new Random();
 
         List<Keys> keysPressed = new List<Keys>();
+
+		//font for display score
+		Font statsFont = new Font(FontFamily.GenericMonospace, 40);
+
+		//for score
+		List<string> scoreboard = new List<string>();
+		private string path = Path.Combine(Environment.CurrentDirectory, "scoreboard.txt");
 
         private bool gameOver;
 
@@ -44,6 +52,13 @@ namespace Lab_3___Invaders
 			uInterface_main.btnUnmuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
 			uInterface_main.btnMuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
 			uInterface_scoreBoard.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
+			uInterface_scoreBoard.menuImg.Paint += new PaintEventHandler(scoreBoardMenu_Paint);
+
+			if (File.Exists(path))
+			{
+				scoreboard = game.StoreScores();
+			}
+			
         }
 
 		private void menuImage_MouseClick(object sender, MouseEventArgs e)
@@ -79,6 +94,31 @@ namespace Lab_3___Invaders
 				Application.Exit();
 			}
 		}
+
+		//display score
+		private void scoreBoardMenu_Paint(object sender, PaintEventArgs e)
+		{
+			Graphics graphics = e.Graphics;
+
+			int hx = 220;
+			int hy = 140;
+			int hxy = 80;
+			int c;
+
+			for (int i = 0; i < scoreboard.Count(); i++)
+			{
+				c = i + 1;
+
+				graphics.DrawString("Score " + c.ToString() + ": " + scoreboard[i], statsFont, Brushes.White, hx, hy);
+				hy += hxy;
+
+				if (i == 4)
+				{
+					break;
+				}
+			}
+		}
+
 
 		private void button_MouseClick(object sender, MouseEventArgs e)
 		{
@@ -162,6 +202,12 @@ namespace Lab_3___Invaders
             gameTimer.Stop();
             gameOver = true;
             Invalidate();
+
+			//record the score 
+			if (gameOver)
+			{
+				game.Record();
+			}
         }
 
 
