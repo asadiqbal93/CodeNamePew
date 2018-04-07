@@ -37,7 +37,7 @@ namespace Lab_3___Invaders
         private RectangleF uiRect;
 
         private Bitmap ui;
-        private Bitmap gameOverGraphic;
+        //private Bitmap gameOverGraphic;
 
         Font messageFont = new Font(FontFamily.GenericMonospace, 50, FontStyle.Bold);
         Font statsFont = new Font(FontFamily.GenericMonospace, 12);
@@ -72,7 +72,7 @@ namespace Lab_3___Invaders
             invaderShots = new List<Shot>();
             invaders = new List<Invader>();
             ui = Properties.Resources.GameUI;
-            gameOverGraphic = Properties.Resources.GameOver;
+            //gameOverGraphic = Properties.Resources.GameOver;
 
 
             nextWave();
@@ -112,8 +112,6 @@ namespace Lab_3___Invaders
             {
                 // Asad : Once game is over play Game OVER sound , for some reason it has major delay and only initiates sound player when game is restarted??
                 gameOverSoundPlayer.Play();
-                graphics.DrawImage(gameOverGraphic, uiRect);
-                
             }
 
         }

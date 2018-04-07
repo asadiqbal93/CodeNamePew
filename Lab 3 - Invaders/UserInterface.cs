@@ -74,7 +74,7 @@ namespace Lab_3___Invaders
 
                     break;
 
-				case 2: //the panel is the acoreboard
+				case 2: //the panel is the scoreboard
 					panel.Name = "scoreBoardMenu";
 					panel.Location = new Point(0, 0);
 					panel.Size = new Size(794, 672);
@@ -83,6 +83,34 @@ namespace Lab_3___Invaders
 					image.Location = new Point(0, 0);
 					image.Size = new Size(794, 672);
 					menuImage = Properties.Resources.scoreboardMenu;
+					image.Image = menuImage;
+
+					break;
+
+				case 3: //this panel is the gameover panel which prompt for username
+					panel.Name = "gameOver_enterScore";
+					panel.Location = new Point(0, 0);
+					panel.Size = new Size(794, 672);
+					panel.BackColor = Color.Transparent;
+
+					image.Name = "gameOverImage_score";
+					image.Location = new Point(0, 0);
+					image.Size = new Size(794, 672);
+					menuImage = Properties.Resources.gameOver_enterScore;
+					image.Image = menuImage;
+
+					break;
+
+				case 4: //this panel is the gameover panel which has buttons to choose
+					panel.Name = "gameOver_buttons";
+					panel.Location = new Point(0, 0);
+					panel.Size = new Size(794, 672);
+					panel.BackColor = Color.Transparent;
+
+					image.Name = "gameOverImage_buttons";
+					image.Location = new Point(0, 0);
+					image.Size = new Size(794, 672);
+					menuImage = Properties.Resources.gameOver_buttons;
 					image.Image = menuImage;
 
 					break;

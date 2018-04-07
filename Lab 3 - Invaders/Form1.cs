@@ -17,8 +17,12 @@ namespace Lab_3___Invaders
 		private Game game;
 		private UserInterface uInterface_main = new UserInterface();
 		private UserInterface uInterface_scoreBoard = new UserInterface();
+		private UserInterface uInterface_gameOver_score = new UserInterface();
+		private UserInterface uInterface_gameOver_buttons = new UserInterface();
 		private Panel mainMenu = new Panel();
 		private Panel scoreBoardMenu = new Panel();
+		private Panel gameOver_score = new Panel();
+		private Panel gameOver_buttons = new Panel();
         public Rectangle FormArea { get { return this.ClientRectangle; } }
         Random random = new Random();
 
@@ -46,17 +50,26 @@ namespace Lab_3___Invaders
             game.GameOver += new EventHandler(game_GameOver);
             animationTimer.Start();
 
+			//Panels
 			mainMenu = uInterface_main.CreatePanel(1);
 			scoreBoardMenu = uInterface_scoreBoard.CreatePanel(2);
+			gameOver_score = uInterface_gameOver_score.CreatePanel(3);
+			gameOver_buttons = uInterface_gameOver_buttons.CreatePanel(4);
 
 			Controls.Add(mainMenu);
 			Controls.Add(scoreBoardMenu);
+			Controls.Add(gameOver_score);
+			Controls.Add(gameOver_buttons);
 
 			uInterface_main.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 			uInterface_main.btnUnmuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
 			uInterface_main.btnMuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
+
 			uInterface_scoreBoard.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 			uInterface_scoreBoard.menuImg.Paint += new PaintEventHandler(scoreBoardMenu_Paint);
+
+			uInterface_gameOver_score.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
+			uInterface_gameOver_buttons.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 
 			if (File.Exists(path))
 			{
@@ -67,17 +80,18 @@ namespace Lab_3___Invaders
 
 		private void menuImage_MouseClick(object sender, MouseEventArgs e)
 		{
-			Rectangle btnStart = new Rectangle(343, 367, 108, 44);
-			Rectangle btnScoreBoard = new Rectangle(265, 448, 263, 42);
-			Rectangle btnExit = new Rectangle(357, 535, 83, 45);
-			Rectangle btnBack = new Rectangle(40, 592, 103, 43);
-
 			if (sender == uInterface_main.menuImg)
 			{
+				Rectangle btnStart = new Rectangle(343, 367, 108, 44);
+				Rectangle btnScoreBoard = new Rectangle(265, 448, 263, 42);
+				Rectangle btnExit = new Rectangle(357, 535, 83, 45);
+
 				if (btnStart.Contains(e.Location))
 				{
 					mainMenu.Visible = false;
 					scoreBoardMenu.Visible = false;
+					gameOver_score.Visible = false;
+					gameOver_buttons.Visible = false;
 
 					// code to reset the game
 					gameOver = false;
@@ -97,10 +111,50 @@ namespace Lab_3___Invaders
 			}
 			else if (sender == uInterface_scoreBoard.menuImg)
 			{
+				Rectangle btnBack = new Rectangle(40, 592, 103, 43);
+
 				if (btnBack.Contains(e.Location))
 				{
 					scoreBoardMenu.Visible = false;
 					mainMenu.Visible = true;
+				}
+			}
+			else if (sender == uInterface_gameOver_score.menuImg)
+			{
+				Rectangle btnClick = new Rectangle(0, 0, 794, 672);
+
+				if (btnClick.Contains(e.Location))
+				{
+					gameOver_score.Visible = false;
+					gameOver_buttons.Visible = true;
+				}
+			}
+			else if (sender == uInterface_gameOver_buttons.menuImg)
+			{
+				Rectangle btnPlayAgain = new Rectangle(324, 347, 145, 36);
+				Rectangle btnScoreBoard = new Rectangle(318, 410, 156, 30);
+				Rectangle btnMainMenu = new Rectangle(320, 477, 154, 28);
+
+				if (btnPlayAgain.Contains(e.Location))
+				{
+					gameOver_buttons.Visible = false;
+
+                    // code to reset the game
+	                    gameOver = false;
+	                    game = new Game(random, FormArea);
+						game.GameOver += new EventHandler(game_GameOver);
+						gameTimer.Start();
+				}
+				else if (btnScoreBoard.Contains(e.Location))
+				{
+					gameOver_buttons.Visible = false;
+					scoreBoardMenu.Visible = true;
+				}
+				else if (btnMainMenu.Contains(e.Location))
+				{
+					gameOver_buttons.Visible = false;
+					mainMenu.Visible = true;
+					mainMenuMusic.Play();
 				}
 			}
 		}
@@ -218,6 +272,8 @@ namespace Lab_3___Invaders
 			{
 				game.Record();
 			}
+
+			gameOver_score.Visible = true;
         }
 
 
