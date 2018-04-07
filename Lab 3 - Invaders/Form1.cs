@@ -24,6 +24,10 @@ namespace Lab_3___Invaders
 
         List<Keys> keysPressed = new List<Keys>();
 
+		// backgroud music
+		// This SoundPlayer plays a sound when the Game starts at the main menu
+		System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
+
 		//font for display score
 		Font statsFont = new Font(FontFamily.GenericMonospace, 40);
 
@@ -130,13 +134,13 @@ namespace Lab_3___Invaders
 		{
 			if (sender == uInterface_main.btnUnmuteImg)
 			{
-				//TODO: Mute the sound
+				mainMenuMusic.Stop();
 				uInterface_main.btnUnmuteImg.Visible = false;
 				uInterface_main.btnMuteImg.Visible = true;
 			}
 			else if (sender == uInterface_main.btnMuteImg)
 			{
-				//TODO: Unmute the sound
+				mainMenuMusic.Play();
 				uInterface_main.btnUnmuteImg.Visible = true;
 				uInterface_main.btnMuteImg.Visible = false;
 			}
