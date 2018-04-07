@@ -154,7 +154,7 @@ namespace Lab_3___Invaders
 				{
 					gameOver_buttons.Visible = false;
 					mainMenu.Visible = true;
-					mainMenuMusic.Play();
+					mainMenuMusic.PlayLooping();
 				}
 			}
 		}
@@ -194,7 +194,7 @@ namespace Lab_3___Invaders
 			}
 			else if (sender == uInterface_main.btnMuteImg)
 			{
-				mainMenuMusic.Play();
+				mainMenuMusic.PlayLooping();
 				uInterface_main.btnUnmuteImg.Visible = true;
 				uInterface_main.btnMuteImg.Visible = false;
 			}

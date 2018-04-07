@@ -108,11 +108,6 @@ namespace Lab_3___Invaders
                 statsFont, Brushes.Yellow, livesLocation);
             graphics.DrawString(("Wave: " + wave.ToString()),
                 statsFont, Brushes.Yellow, waveLocation);
-            if (gameOver)
-            {
-                // Asad : Once game is over play Game OVER sound , for some reason it has major delay and only initiates sound player when game is restarted??
-                gameOverSoundPlayer.Play();
-            }
 
         }
 
@@ -314,11 +309,18 @@ namespace Lab_3___Invaders
                     deadInvaderShots.Add(shot);
                     livesLeft--;
                     playerShip.Alive = false;
-                    if (livesLeft == 0)
-                        GameOver(this, null);
-                    // Asad : Sound Player plays the sound once the playerShip is killed
-                    playerShipDeadSoundPlayer.Play();
-                    // worth checking for gameOver state here too?
+					if (livesLeft == 0)
+					{
+						GameOver(this, null);
+
+						// Once game is over play Game OVER sound
+						gameOverSoundPlayer.Play();
+					}
+					else
+					{
+						// Asad : Sound Player plays the sound once the playerShip is killed
+						playerShipDeadSoundPlayer.Play();
+					}
                 }
             }
 

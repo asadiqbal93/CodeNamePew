@@ -68,8 +68,8 @@ namespace Lab_3___Invaders
 					image.Controls.Add(btnMute);
 					//Assign into public field
 					btnMuteImg = btnMute;
-                    // Asad : Main menu music added , button not synced yet
-                    mainMenuMusic.Play();
+                    // Asad : Main menu music added
+                    mainMenuMusic.PlayLooping();
 
 
                     break;
