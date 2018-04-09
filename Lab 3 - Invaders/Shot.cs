@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// Shot Class
+    /// </summary>
     class Shot
     {
         private const int moveInterval = 15;
@@ -17,7 +20,12 @@ namespace Lab_3___Invaders
 
         private Direction direction;
         private Rectangle boundaries;
-
+        /// <summary>
+        /// Constructor for Shot 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="direction"></param>
+        /// <param name="boundaries"></param>
         public Shot(Point location, Direction direction,
             Rectangle boundaries)
         {
@@ -25,13 +33,19 @@ namespace Lab_3___Invaders
             this.direction = direction;
             this.boundaries = boundaries;
         }
-
+        /// <summary>
+        /// The laser object draw method -- shooting
+        /// </summary>
+        /// <param name="graphics"></param>
         public void Draw(Graphics graphics)
         {
             graphics.FillRectangle(Brushes.Red,
                 Location.X, Location.Y, width, height);
         }
-
+        /// <summary>
+        /// Move method 
+        /// </summary>
+        /// <returns></returns>
         public bool Move()
         {
             Point newLocation;

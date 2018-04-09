@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// User Interface class
+    /// </summary>
 	class UserInterface
 	{
 		//To access them in Form1.cs
@@ -22,7 +25,11 @@ namespace Lab_3___Invaders
 			btnUnmuteImg = new PictureBox();
 			btnMuteImg = new PictureBox();
 		}
-
+        /// <summary>
+        /// Create the main panel for the program
+        /// </summary>
+        /// <param name="no"></param>
+        /// <returns></returns>
 		public Panel CreatePanel(int no)
 		{
 			Panel panel = new Panel();

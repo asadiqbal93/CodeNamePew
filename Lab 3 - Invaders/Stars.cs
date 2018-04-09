@@ -6,11 +6,18 @@ using System.Drawing;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// Stars Class
+    /// </summary>
     class Stars
     {
         private List<Star> stars;
         private Rectangle formArea;
-        
+        /// <summary>
+        /// Constructor for Stars
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="formArea"></param>
         public Stars(Random random, Rectangle formArea)
         {
             this.formArea = formArea;
@@ -18,7 +25,10 @@ namespace Lab_3___Invaders
             for (int i = 1; i < 300; i++)
                 addStar(random);
         }
-
+        /// <summary>
+        /// Add Stars to the background method
+        /// </summary>
+        /// <param name="random"></param>
         private void addStar(Random random)
         {
             int height = formArea.Height;
@@ -27,7 +37,11 @@ namespace Lab_3___Invaders
             Star newStar = new Star(location, Brushes.Yellow);
             stars.Add(newStar);
         }
-
+        /// <summary>
+        /// Draw Graphics method onto the gameboard
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <returns></returns>
         public Graphics Draw(Graphics graphics)
         {
             Graphics starGraphics = graphics;
@@ -37,7 +51,10 @@ namespace Lab_3___Invaders
             }
             return starGraphics;
         }
-
+        /// <summary>
+        /// Twinkle the stars at the background
+        /// </summary>
+        /// <param name="random"></param>
         public void Twinkle(Random random)
         {
             // Remove 4 stars and randomly place 4 new ones

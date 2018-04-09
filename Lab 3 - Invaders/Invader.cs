@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// The main Invader class
+    /// </summary>
     class Invader
     {
         private const int horizontalInterval = 10;
@@ -28,7 +31,12 @@ namespace Lab_3___Invaders
         }
 
         public int Score { get; private set; }
-
+        /// <summary>
+        /// Invader class constructor
+        /// </summary>
+        /// <param name="invaderType"></param>
+        /// <param name="location"></param>
+        /// <param name="score"></param>
         public Invader(ShipType invaderType, Point location, int score)
         {
             this.InvaderType = invaderType;
@@ -38,7 +46,10 @@ namespace Lab_3___Invaders
             createInvaderBitmapArray();
             image = imageArray[0];
         }
-
+        /// <summary>
+        /// Move method for the Invader
+        /// </summary>
+        /// <param name="direction"></param>
         public void Move(Direction direction)
         {
             switch (direction)
@@ -56,7 +67,12 @@ namespace Lab_3___Invaders
             }
 
         }
-
+        /// <summary>
+        /// Draw graphics method with graphics and animationCell 
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="animationCell"></param>
+        /// <returns></returns>
         public Graphics Draw(Graphics graphics, int animationCell)
         {
             Graphics invaderGraphics = graphics;
@@ -75,7 +91,9 @@ namespace Lab_3___Invaders
             //    Location.X, Location.Y, 20, 20);
             return invaderGraphics;
         }
-
+        /// <summary>
+        /// Method which creates the Invader's bit map array
+        /// </summary>
         private void createInvaderBitmapArray()
         {
             imageArray = new Bitmap[4];

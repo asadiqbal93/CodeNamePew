@@ -6,10 +6,16 @@ using System.Drawing;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// Player ship class
+    /// </summary>
     class PlayerShip
     {
         private const int horizontalInterval = 10;
         public Point Location { get; private set; }
+        /// <summary>
+        /// read only property for Area
+        /// </summary>
         public Rectangle Area
         {
             get
@@ -22,6 +28,9 @@ namespace Lab_3___Invaders
         private DateTime deathWait;
 
         private bool alive;
+        /// <summary>
+        /// Alive property
+        /// </summary>
         public bool Alive
         {
             get { return alive; }
@@ -36,7 +45,11 @@ namespace Lab_3___Invaders
         private Rectangle boundaries;
 
         private float deadShipHeight;
-
+        /// <summary>
+        /// PlayerShip constructor
+        /// </summary>
+        /// <param name="boundaries"></param>
+        /// <param name="location"></param>
         public PlayerShip(Rectangle boundaries, Point location)
         {
             this.boundaries = boundaries;
@@ -44,7 +57,10 @@ namespace Lab_3___Invaders
             Alive = true;
             deadShipHeight = 1.0F;
         }
-
+        /// <summary>
+        /// Move method for the player ship - Select from moving left or right
+        /// </summary>
+        /// <param name="direction"></param>
         public void Move(Direction direction)
         {
             if (Alive)
@@ -63,7 +79,10 @@ namespace Lab_3___Invaders
                 }
             }
         }
-
+        /// <summary>
+        /// Draw graphics method for the player ship
+        /// </summary>
+        /// <param name="graphics"></param>
         public void Draw(Graphics graphics)
         {
             if (!Alive)
