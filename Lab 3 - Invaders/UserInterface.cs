@@ -16,8 +16,9 @@ namespace Lab_3___Invaders
 		public PictureBox menuImg;
 		public PictureBox btnUnmuteImg;
 		public PictureBox btnMuteImg;
-        // This SoundPlayer plays a sound when the Game starts at the main menu
-        System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
+		public TextBox UserInput;
+		// This SoundPlayer plays a sound when the Game starts at the main menu
+		System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
 
         public UserInterface()
 		{
@@ -99,6 +100,15 @@ namespace Lab_3___Invaders
 					panel.Location = new Point(0, 0);
 					panel.Size = new Size(794, 672);
 					panel.BackColor = Color.Transparent;
+
+					//display textbox
+					panel.Visible = false;
+
+					TextBox t1 = new TextBox() { Left = 285, Top = 418, Width = 230, BackColor = Color.Black, ForeColor = Color.White, BorderStyle = BorderStyle.None };
+					Pen p = new Pen(Color.Red);
+
+					UserInput = t1;
+					panel.Controls.Add(t1);
 
 					image.Name = "gameOverImage_score";
 					image.Location = new Point(0, 0);

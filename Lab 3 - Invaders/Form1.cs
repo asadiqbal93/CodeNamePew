@@ -80,6 +80,8 @@ namespace Lab_3___Invaders
 			uInterface_gameOver_score.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 			uInterface_gameOver_buttons.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 
+			uInterface_gameOver_score.UserInput.KeyDown += new KeyEventHandler(textBox1_KeyDown);
+
 			uInterface_pauseInterface.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 
 			if (File.Exists(path))
@@ -209,7 +211,7 @@ namespace Lab_3___Invaders
 			{
 				c = i + 1;
 
-				graphics.DrawString("Score " + c.ToString() + ": " + scoreboard[i], statsFont, Brushes.White, hx, hy);
+				graphics.DrawString(scoreboard[i], statsFont, Brushes.White, hx, hy);
 				hy += hxy;
 
 				if (i == 4)
@@ -311,14 +313,33 @@ namespace Lab_3___Invaders
             gameOver = true;
             Invalidate();
 
-			//record the score 
-			if (gameOver)
-			{
-				game.Record();
-			}
-
+			//display textbox
 			gameOver_score.Visible = true;
+			uInterface_gameOver_score.UserInput.Visible = true;
         }
+
+		//press enter to record score and username
+		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+		{
+
+			if (e.KeyData == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+
+				string username = uInterface_gameOver_score.UserInput.Text;
+
+				uInterface_gameOver_score.UserInput.Visible = false;
+				game.Record(username);
+				scoreboard = game.StoreScores();
+
+				uInterface_gameOver_score.UserInput.Clear();
+				this.Focus();
+
+				gameOver_score.Visible = false;
+				gameOver_buttons.Visible = true;
+
+			}
+		}
 
 
     }

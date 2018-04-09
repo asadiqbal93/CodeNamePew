@@ -122,17 +122,18 @@ namespace Lab_3___Invaders
 
         }
         /// <summary>
-        /// Record score into scoreboard.txt
+        /// Record score and username into scoreboard.txt
         /// </summary>
-		public void Record()
+		public void Record(string username)
 		{
+			string name = username;
 			if (!File.Exists(path))
 			{
-				File.WriteAllText(path, score + Environment.NewLine);
+				File.WriteAllText(path, name + ": " + score + Environment.NewLine);
 			}
 			else
 			{
-				File.AppendAllText(path, score + Environment.NewLine);
+				File.AppendAllText(path, name + ": " + score + Environment.NewLine);
 			}
 
 		}
