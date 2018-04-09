@@ -91,6 +91,14 @@
     <Compile Include="UserInterface.cs" />
     <None Include="Resources\gameOver_buttons.png" />
     <None Include="Resources\gameOver_score.png" />
+    <None Include="Resources\pauseInterface.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\explosion.wav" />
+    <None Include="Resources\gameover.wav" />
+    <None Include="Resources\invaderkilled.wav" />
+    <None Include="Resources\Mainmenu.wav" />
+    <None Include="Resources\shoot.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug1.png" />

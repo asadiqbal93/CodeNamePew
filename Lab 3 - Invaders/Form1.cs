@@ -19,10 +19,16 @@ namespace Lab_3___Invaders
 		private UserInterface uInterface_scoreBoard = new UserInterface();
 		private UserInterface uInterface_gameOver_score = new UserInterface();
 		private UserInterface uInterface_gameOver_buttons = new UserInterface();
+		private UserInterface uInterface_pauseInterface = new UserInterface();
+
+
 		private Panel mainMenu = new Panel();
 		private Panel scoreBoardMenu = new Panel();
 		private Panel gameOver_score = new Panel();
 		private Panel gameOver_buttons = new Panel();
+		private Panel pause_Interface = new Panel();
+
+
         public Rectangle FormArea { get { return this.ClientRectangle; } }
         Random random = new Random();
 
@@ -55,11 +61,14 @@ namespace Lab_3___Invaders
 			scoreBoardMenu = uInterface_scoreBoard.CreatePanel(2);
 			gameOver_score = uInterface_gameOver_score.CreatePanel(3);
 			gameOver_buttons = uInterface_gameOver_buttons.CreatePanel(4);
+			pause_Interface = uInterface_pauseInterface.CreatePanel(5);
+
 
 			Controls.Add(mainMenu);
 			Controls.Add(scoreBoardMenu);
 			Controls.Add(gameOver_score);
 			Controls.Add(gameOver_buttons);
+			Controls.Add(pause_Interface);
 
 			uInterface_main.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 			uInterface_main.btnUnmuteImg.MouseClick += new MouseEventHandler(button_MouseClick);
@@ -70,6 +79,8 @@ namespace Lab_3___Invaders
 
 			uInterface_gameOver_score.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 			uInterface_gameOver_buttons.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
+
+			uInterface_pauseInterface.menuImg.MouseClick += new MouseEventHandler(menuImage_MouseClick);
 
 			if (File.Exists(path))
 			{
@@ -157,6 +168,31 @@ namespace Lab_3___Invaders
 					mainMenuMusic.PlayLooping();
 				}
 			}
+			else if (sender == uInterface_pauseInterface.menuImg)
+			{
+				Rectangle btnContinue = new Rectangle(333, 252, 127, 38);
+				Rectangle btnPlayAgain = new Rectangle(325, 313, 141, 40);
+				Rectangle btnMainMenu = new Rectangle(320, 373, 148, 38);
+
+				if (btnContinue.Contains(e.Location))
+				{
+					pause_Interface.Visible = false;
+					gameTimer.Start();
+				}
+				else if (btnPlayAgain.Contains(e.Location))
+				{
+					pause_Interface.Visible = false;
+					gameOver = false;
+					game = new Game(random, FormArea);
+					game.GameOver += new EventHandler(game_GameOver);
+					gameTimer.Start();
+				}
+				else if (btnMainMenu.Contains(e.Location))
+				{
+					pause_Interface.Visible = false;
+					mainMenu.Visible = true;
+				}
+			}
 		}
 
 		//display score
@@ -220,6 +256,14 @@ namespace Lab_3___Invaders
         {
             if (e.KeyCode == Keys.Q)
                 Application.Exit();
+
+			//press escape to pause game
+			if (e.KeyCode == Keys.Escape)
+			{
+				pause_Interface.Visible = true;
+				gameTimer.Stop();
+			}
+
             if (e.KeyCode == Keys.S)
                 {
                     // code to reset the game

@@ -121,6 +121,22 @@ namespace Lab_3___Invaders
 					image.Image = menuImage;
 
 					break;
+
+
+				case 5: //this panel is the pause panel 
+					panel.Name = "pauseInterface";
+					panel.Location = new Point(0, 0);
+					panel.Size = new Size(794, 672);
+					panel.BackColor = Color.Transparent;
+					panel.Visible = false;
+
+					image.Name = "pauseInterfaceImage";
+					image.Location = new Point(0, 0);
+					image.Size = new Size(794, 672);
+					menuImage = Properties.Resources.pauseInterface;
+					image.Image = menuImage;
+
+					break;
 			}
 
 			//Add controls into the panel created
