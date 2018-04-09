@@ -89,6 +89,8 @@
     <None Include="Resources\scoreboardMenu.png" />
     <None Include="Resources\unmute.png" />
     <Compile Include="UserInterface.cs" />
+    <None Include="Resources\gameOver_buttons.png" />
+    <None Include="Resources\gameOver_score.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug1.png" />

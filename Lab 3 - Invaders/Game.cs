@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// The Game Class - All the logic gets implemented in this class
+    /// </summary>
     class Game
     {
         private Stars stars;
@@ -36,11 +40,30 @@ namespace Lab_3___Invaders
         private RectangleF uiRect;
 
         private Bitmap ui;
-        private Bitmap gameOverGraphic;
+        //private Bitmap gameOverGraphic;
 
         Font messageFont = new Font(FontFamily.GenericMonospace, 50, FontStyle.Bold);
         Font statsFont = new Font(FontFamily.GenericMonospace, 12);
-        
+
+		//scoreboard
+		//creating scoreboard text file in current directory to store score;
+		private string path = Path.Combine(Environment.CurrentDirectory, "scoreboard.txt");
+		private List<string> scoreboard = new List<string>();
+       
+        // *************************************** LOAD SOUNDS  **********************************************
+        //This SoundPlayer plays a sound whenever the player fires from the playerShip
+        System.Media.SoundPlayer fireSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\shoot.wav");
+        // This SoundPlayer plays a sound when the game ends 
+        System.Media.SoundPlayer gameOverSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\gameover.wav");
+        // This SoundPlayer plays a sound when the Game is over
+        System.Media.SoundPlayer playerShipDeadSoundPlayer = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\explosion.wav");
+       
+        // ***************************************************************************************************
+        /// <summary>
+        /// Game class constructor - Creating the game board
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="formArea"></param>
         public Game(Random random, Rectangle formArea)
         {
             this.formArea = formArea;
@@ -56,13 +79,17 @@ namespace Lab_3___Invaders
             invaderShots = new List<Shot>();
             invaders = new List<Invader>();
             ui = Properties.Resources.GameUI;
-            gameOverGraphic = Properties.Resources.GameOver;
+            //gameOverGraphic = Properties.Resources.GameOver;
 
 
             nextWave();
         }
-
-        // Draw is fired with each paint event of the main form
+        /// <summary>
+        /// Draw is fired with each paint event of the main form
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="frame"></param>
+        /// <param name="gameOver"></param>
         public void Draw(Graphics graphics, int frame, bool gameOver)
         {
             graphics.FillRectangle(Brushes.Black, formArea);
@@ -92,19 +119,47 @@ namespace Lab_3___Invaders
                 statsFont, Brushes.Yellow, livesLocation);
             graphics.DrawString(("Wave: " + wave.ToString()),
                 statsFont, Brushes.Yellow, waveLocation);
-            if (gameOver)
-            {
-                graphics.DrawImage(gameOverGraphic, uiRect);
-            }
 
         }
+        /// <summary>
+        /// Record score into scoreboard.txt
+        /// </summary>
+		public void Record()
+		{
+			if (!File.Exists(path))
+			{
+				File.WriteAllText(path, score + Environment.NewLine);
+			}
+			else
+			{
+				File.AppendAllText(path, score + Environment.NewLine);
+			}
 
-        // Twinkle (animates stars) is called from the form animation timer
+		}
+        /// <summary>
+        /// StoreScores into a List of string
+        /// </summary>
+        /// <returns></returns>
+		public List<string> StoreScores()
+		{
+			scoreboard.AddRange(File.ReadAllLines(path));
+			scoreboard.Reverse();
+
+			return scoreboard;
+
+		} 
+        /// <summary>
+        /// Twinkle (animates stars) is called from the form animation timer
+        /// </summary>
         public void Twinkle()
         {
             stars.Twinkle(random);
         }
-
+        /// <summary>
+        /// MovePlayer method which moves the player as long as the game is not over
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="gameOver"></param>
         public void MovePlayer(Direction direction, bool gameOver)
         {
             if (!gameOver)
@@ -112,7 +167,9 @@ namespace Lab_3___Invaders
                 playerShip.Move(direction);
             }
         }
-
+        /// <summary>
+        /// Fireshot method 
+        /// </summary>
         public void FireShot()
         {
             if (playerShots.Count < 10) //Lee: Changed from Count < 2, enables more bullets for the player to fire
@@ -122,9 +179,13 @@ namespace Lab_3___Invaders
                         , playerShip.Location.Y),
                     Direction.Up, formArea);
                 playerShots.Add(newShot);
+                // Asad: Sound Player plays the sound of shooting from the PlayerShip
+                fireSoundPlayer.Play();
             }
         }
-
+        /// <summary>
+        /// Go method which has several checks in place wether player is dead , calling other methods inside such as moveInvaders, retunFire etc.
+        /// </summary>
         public void Go()
         {
             if (playerShip.Alive)
@@ -158,7 +219,9 @@ namespace Lab_3___Invaders
             }
 
         }
-
+        /// <summary>
+        /// Move Invaders method
+        /// </summary>
         private void moveInvaders()
         {
             // if the frame is skipped invaders do not move
@@ -224,7 +287,9 @@ namespace Lab_3___Invaders
             if (currentGameFrame > 6)
                 currentGameFrame = 1;
         }
-
+        /// <summary>
+        /// Return fire method
+        /// </summary>
         private void returnFire()
         {
             //// invaders check their location and fire at the player
@@ -256,7 +321,9 @@ namespace Lab_3___Invaders
             invaderShots.Add(newShot);
         }
 
-
+        /// <summary>
+        /// Check for collisions method
+        /// </summary>
         private void checkForCollisions()
         {
             // Created seperate lists of dead shots since items can't be
@@ -271,9 +338,18 @@ namespace Lab_3___Invaders
                     deadInvaderShots.Add(shot);
                     livesLeft--;
                     playerShip.Alive = false;
-                    if (livesLeft == 0)
-                        GameOver(this, null);
-                    // worth checking for gameOver state here too?
+					if (livesLeft == 0)
+					{
+						GameOver(this, null);
+
+						// Once game is over play Game OVER sound
+						gameOverSoundPlayer.Play();
+					}
+					else
+					{
+						// Asad : Sound Player plays the sound once the playerShip is killed
+						playerShipDeadSoundPlayer.Play();
+					}
                 }
             }
 
@@ -303,7 +379,9 @@ namespace Lab_3___Invaders
             foreach (Shot shot in deadInvaderShots)
                 invaderShots.Remove(shot);
         }
-
+        /// <summary>
+        /// Next wave method
+        /// </summary>
         private void nextWave()
         {
             wave++;
@@ -343,5 +421,6 @@ namespace Lab_3___Invaders
         }
 
         public event EventHandler GameOver;
+
     }
 }

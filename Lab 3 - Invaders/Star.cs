@@ -6,6 +6,9 @@ using System.Drawing;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// Star struct
+    /// </summary>
     struct Star
     {
         public Point point;

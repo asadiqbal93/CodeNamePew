@@ -7,20 +7,29 @@ using System.Windows.Forms;
 
 namespace Lab_3___Invaders
 {
+    /// <summary>
+    /// User Interface class
+    /// </summary>
 	class UserInterface
 	{
 		//To access them in Form1.cs
 		public PictureBox menuImg;
 		public PictureBox btnUnmuteImg;
 		public PictureBox btnMuteImg;
+        // This SoundPlayer plays a sound when the Game starts at the main menu
+        System.Media.SoundPlayer mainMenuMusic = new System.Media.SoundPlayer(@"C:\CodeNamePew\Lab 3 - Invaders\Resources\Mainmenu.wav");
 
-		public UserInterface()
+        public UserInterface()
 		{
 			menuImg = new PictureBox();
 			btnUnmuteImg = new PictureBox();
 			btnMuteImg = new PictureBox();
 		}
-
+        /// <summary>
+        /// Create the main panel for the program
+        /// </summary>
+        /// <param name="no"></param>
+        /// <returns></returns>
 		public Panel CreatePanel(int no)
 		{
 			Panel panel = new Panel();
@@ -66,10 +75,13 @@ namespace Lab_3___Invaders
 					image.Controls.Add(btnMute);
 					//Assign into public field
 					btnMuteImg = btnMute;
+                    // Asad : Main menu music added
+                    mainMenuMusic.PlayLooping();
 
-					break;
 
-				case 2: //the panel is the acoreboard
+                    break;
+
+				case 2: //the panel is the scoreboard
 					panel.Name = "scoreBoardMenu";
 					panel.Location = new Point(0, 0);
 					panel.Size = new Size(794, 672);
@@ -78,6 +90,34 @@ namespace Lab_3___Invaders
 					image.Location = new Point(0, 0);
 					image.Size = new Size(794, 672);
 					menuImage = Properties.Resources.scoreboardMenu;
+					image.Image = menuImage;
+
+					break;
+
+				case 3: //this panel is the gameover panel which prompt for username
+					panel.Name = "gameOver_enterScore";
+					panel.Location = new Point(0, 0);
+					panel.Size = new Size(794, 672);
+					panel.BackColor = Color.Transparent;
+
+					image.Name = "gameOverImage_score";
+					image.Location = new Point(0, 0);
+					image.Size = new Size(794, 672);
+					menuImage = Properties.Resources.gameOver_enterScore;
+					image.Image = menuImage;
+
+					break;
+
+				case 4: //this panel is the gameover panel which has buttons to choose
+					panel.Name = "gameOver_buttons";
+					panel.Location = new Point(0, 0);
+					panel.Size = new Size(794, 672);
+					panel.BackColor = Color.Transparent;
+
+					image.Name = "gameOverImage_buttons";
+					image.Location = new Point(0, 0);
+					image.Size = new Size(794, 672);
+					menuImage = Properties.Resources.gameOver_buttons;
 					image.Image = menuImage;
 
 					break;
