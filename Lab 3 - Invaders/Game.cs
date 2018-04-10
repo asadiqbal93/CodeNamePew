@@ -28,6 +28,11 @@ namespace Lab_3___Invaders
         private List<Invader> invaders;
         private const int invaderXSpacing = 60;
         private const int invaderYSpacing = 60;
+        
+        //private Direction alienDirection;
+        //private const int alienXSpacing = 60;
+        //private const int alienYSpacing = 60;
+        //private List<Alien> alien;
 
         private PlayerShip playerShip;
         private List<Shot> playerShots;
@@ -79,6 +84,7 @@ namespace Lab_3___Invaders
             invaderShots = new List<Shot>();
             invaders = new List<Invader>();
             ui = Properties.Resources.GameUI;
+            //boss = new Alien();
             //gameOverGraphic = Properties.Resources.GameOver;
 
 
@@ -397,8 +403,32 @@ namespace Lab_3___Invaders
             {
                 framesSkipped = 6 - wave;
             }
-            else
+            else {
                 framesSkipped = 0;
+            }
+            //if (wave == 3 || wave == 6) {
+            //	int currentAlienYSpace = 0;
+	        //    for (int x = 0; x < 5; x++)
+	        //    {
+	        //        Alien currentAlien = (Alien)x;
+	        //        currentAlienYSpace += alienYSpacing;
+	        //        int currentAlienXSpace = 120; //Lee: Changed this value from 0, so the invaders will start in the middle of the screen
+	        //        for (int y = 0; y < 5; y++)
+	        //        {
+	        //            currentAlienXSpace += alienXSpacing;
+	        //            Point newAleinPoint =
+	        //            	new Point(currentAlienXSpace, currentAlienYSpace);
+	        //            alien newAlien =
+	        //                new Alien(currentAlienType, newAlienPoint, 10);
+	        //            alien.Add(newAlien);
+	        //            playerShots.Clear(); //Lee: Added these two lines to ensure that the 
+	        //            alienShots.Clear();//map is cleared of bullets when a new wave begins
+            //} 
+	            //}
+            //}
+	        //else {
+	        //
+	        //}
 
             int currentInvaderYSpace = 0;
             for (int x = 0; x < 5; x++)
