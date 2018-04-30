@@ -12,22 +12,37 @@ namespace Lab_3___Invaders
     /// </summary>
     class Alien
     {
-        private const int horizontalInterval = 10;
+        private const int horizontalInterval = 5;
         private const int verticalInterval = 30;
-        private double _healthpoint;
+
+        //private double _healthpoint;
 
         private Bitmap image;
+		private Bitmap[] imageArray;
+
         public Point Location {
             get;
             private set;
         }
+
+		public Rectangle Area
+		{
+			get
+			{
+				return new Rectangle(Location, imageArray[0].Size);
+			}	
+		}
+
         public int Score {
             get;
             private set;
         }
+
         public Alien(Point location, int score){
             this.Location = location;
             this.Score = score;
+            createInvaderBitmapArray();
+			image = imageArray[0];
         }
 
         public void Move(Direction direction) {
@@ -45,12 +60,36 @@ namespace Lab_3___Invaders
                     break;
             }
         }
-        // Method closed for Graphics section
-        /*
-          public Graphics Draw(Graphics graphics, int animationCell) {
 
-          }
-        */
+		public Graphics Draw(Graphics graphics, int animationCell)
+		{
+			Graphics bossGraphics = graphics;
+			image = imageArray[animationCell];
+			try
+			{
+				graphics.DrawImage(image, Location);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.ToString());
+			}
+
+			//DEBUG red square invaders
+			//graphics.FillRectangle(Brushes.Red,
+			//    Location.X, Location.Y, 20, 20);
+			return bossGraphics;
+		}
+
+		private void createInvaderBitmapArray()
+		{
+			imageArray = new Bitmap[4];
+
+			imageArray[0] = Properties.Resources.boss1;
+			imageArray[1] = Properties.Resources.boss2;
+			imageArray[2] = Properties.Resources.boss3;
+			imageArray[3] = Properties.Resources.boss4;
+		}
+
         // Method closed for Alien Health logic
         public double AlienHealth() {
             return 0;

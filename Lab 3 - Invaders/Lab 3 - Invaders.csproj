@@ -99,6 +99,7 @@
     <None Include="Resources\invaderkilled.wav" />
     <None Include="Resources\Mainmenu.wav" />
     <None Include="Resources\shoot.wav" />
+    <Compile Include="Alien.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug1.png" />
