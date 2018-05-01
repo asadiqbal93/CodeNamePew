@@ -19,7 +19,7 @@ namespace Lab_3___Invaders
         private Random random;
 
         private int score = 0;
-        private int livesLeft = 5;
+        private int livesLeft = 1;
         private int wave = 0;
         private int framesSkipped = 6;
         private int currentGameFrame = 1;
@@ -153,7 +153,8 @@ namespace Lab_3___Invaders
 				graphics.DrawString(("HP: " + bossLives.ToString()), statsFont, Brushes.Yellow, boss.Location.X + 120, boss.Location.Y - 8);
 			}
 
-
+			//instructions
+			graphics.DrawString("Press Esc to" + '\n' + "pause game.", statsFont, Brushes.White, 3, 20);
 			graphics.DrawString(("Score: " + score.ToString()),
                 statsFont, Brushes.Yellow, scoreLocation);
             graphics.DrawString(("Lives: " + livesLeft.ToString()),
@@ -184,10 +185,15 @@ namespace Lab_3___Invaders
         /// <returns></returns>
 		public List<string> StoreScores()
 		{
-			scoreboard.AddRange(File.ReadAllLines(path));
-			scoreboard.Reverse();
+			List<string> scoreboards = new List<string>();
+			string[] lines = File.ReadAllLines(path);
+			var orderedScores = lines.OrderByDescending(x => int.Parse(x.Split(':')[1]));
+			foreach (var SortScore in orderedScores)
+			{
+				scoreboards.Add(SortScore);
+			}
 
-			return scoreboard;
+			return scoreboards;
 
 		} 
         /// <summary>
