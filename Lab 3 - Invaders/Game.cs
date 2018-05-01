@@ -19,7 +19,7 @@ namespace Lab_3___Invaders
         private Random random;
 
         private int score = 0;
-        private int livesLeft = 1;
+        private int livesLeft = 5;
         private int wave = 0;
         private int framesSkipped = 6;
         private int currentGameFrame = 1;
