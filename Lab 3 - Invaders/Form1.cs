@@ -132,16 +132,7 @@ namespace Lab_3___Invaders
 					mainMenu.Visible = true;
 				}
 			}
-			else if (sender == uInterface_gameOver_score.menuImg)
-			{
-				Rectangle btnClick = new Rectangle(0, 0, 794, 672);
-
-				if (btnClick.Contains(e.Location))
-				{
-					gameOver_score.Visible = false;
-					gameOver_buttons.Visible = true;
-				}
-			}
+		
 			else if (sender == uInterface_gameOver_buttons.menuImg)
 			{
 				Rectangle btnPlayAgain = new Rectangle(324, 347, 145, 36);
