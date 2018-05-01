@@ -19,7 +19,7 @@ namespace Lab_3___Invaders
         private Random random;
 
         private int score = 0;
-        private int livesLeft = 1;
+        private int livesLeft = 5;
         private int wave = 0;
         private int framesSkipped = 6;
         private int currentGameFrame = 1;
@@ -31,7 +31,7 @@ namespace Lab_3___Invaders
         
 		private Direction bossDirection;
 		private Alien boss;
-		private const int bossWave = 2; //TODO: Change the boss level here
+		private const int bossWave = 3; //Lee: Fixed Min's TODO, boss now spawns on the third wave
 		private int bossLives = 50;
 
 
