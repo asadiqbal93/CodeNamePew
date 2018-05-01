@@ -37,10 +37,18 @@ namespace Lab_3___Invaders
         /// The laser object draw method -- shooting
         /// </summary>
         /// <param name="graphics"></param>
-        public void Draw(Graphics graphics)
+        public void Draw(Graphics graphics, string type)
         {
-            graphics.FillRectangle(Brushes.Red,
-                Location.X, Location.Y, width, height);
+            if (type == "player")
+			{
+				graphics.FillRectangle(Brushes.Yellow,
+					Location.X, Location.Y, width, height);
+			}
+			else if (type == "invader")
+			{
+				graphics.FillRectangle(Brushes.Red,
+					Location.X, Location.Y, width, height);
+			}
         }
         /// <summary>
         /// Move method 

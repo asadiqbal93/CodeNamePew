@@ -132,11 +132,11 @@ namespace Lab_3___Invaders
 
             playerShip.Draw(graphics);
             foreach (Shot shot in playerShots)
-                shot.Draw(graphics);
+                shot.Draw(graphics, "player");
             foreach (Shot shot in invaderShots)
-                shot.Draw(graphics);
+                shot.Draw(graphics, "invader");
 			foreach (Shot shot in bossShots)
-                shot.Draw(graphics);
+                shot.Draw(graphics, "invader");
 
             // UI drawing code
             graphics.DrawImage(ui, uiRect);

@@ -23,7 +23,7 @@ namespace Lab_3___Invaders
                 return new Rectangle(Location, image.Size);
             }
         }
-        public Bitmap image = Properties.Resources.player;
+		public Bitmap image = new Bitmap(Properties.Resources.player);
 
         private DateTime deathWait;
 
