@@ -32,6 +32,8 @@ namespace Lab_3___Invaders
 		private Direction bossDirection;
 		private Alien boss;
 		private const int bossWave = 2; //TODO: Change the boss level here
+		private int bossLives = 50;
+
 
 		//TODO: Remove this section after reading
 		/*
@@ -146,7 +148,13 @@ namespace Lab_3___Invaders
                 graphics.DrawImage(ship, formArea.Right - 330.0F + (30.0F * l), formArea.Top + 15.0F, ship.Width * 0.5F, ship.Height * 0.5F);
             }
 
-            graphics.DrawString(("Score: " + score.ToString()),
+			if (wave == bossWave)
+			{
+				graphics.DrawString(("HP: " + bossLives.ToString()), statsFont, Brushes.Yellow, boss.Location.X + 120, boss.Location.Y - 8);
+			}
+
+
+			graphics.DrawString(("Score: " + score.ToString()),
                 statsFont, Brushes.Yellow, scoreLocation);
             graphics.DrawString(("Lives: " + livesLeft.ToString()),
                 statsFont, Brushes.Yellow, livesLocation);
@@ -560,13 +568,20 @@ namespace Lab_3___Invaders
 						}
 					}
 				}
+				//boss hp and score
 				else
 				{
 					if (boss.Area.Contains(shot.Location))
 					{
+						bossLives--;
 						deadBossShots.Add(shot);
-						//TODO: change scoring method for shooting on boss
-						score = score + (1 * wave);
+
+						if (bossLives == 0)
+						{
+							score = score + 100;
+							nextWave();
+						}
+
 						playerShots.Remove(shot);
 						return;
 					}
@@ -650,6 +665,7 @@ namespace Lab_3___Invaders
                     invaders.Add(newInvader);
                     playerShots.Clear(); //Lee: Added these two lines to ensure that the 
                     invaderShots.Clear();//map is cleared of bullets when a new wave begins
+					bossShots.Clear();
                 }
             }
         }
