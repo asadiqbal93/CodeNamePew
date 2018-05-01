@@ -12,7 +12,7 @@ namespace Lab_3___Invaders
     /// </summary>
     class Shot
     {
-        private const int moveInterval = 15;
+        private const int moveInterval = 9;
         private const int width = 3;
         private const int height = 10;
 
@@ -53,10 +53,27 @@ namespace Lab_3___Invaders
             {
                 newLocation = new Point(Location.X, (Location.Y + moveInterval));
             }
+			else if (direction == Direction.Down20L)
+			{
+				newLocation = new Point((Location.X - 3), (Location.Y + moveInterval));
+			}
+			else if (direction == Direction.Down20R)
+			{
+				newLocation = new Point((Location.X + 3), (Location.Y + moveInterval));
+			}
+			else if (direction == Direction.Down40L)
+			{
+				newLocation = new Point((Location.X - 6), (Location.Y + moveInterval));
+			}
+			else if (direction == Direction.Down40R)
+			{
+				newLocation = new Point((Location.X + 6), (Location.Y + moveInterval));
+			}
             else //if (direction == Direction.Up)
             {
                 newLocation = new Point(Location.X, (Location.Y - moveInterval));
             }
+
             if ((newLocation.Y < boundaries.Height) && (newLocation.Y > 0))
             {
                 Location = newLocation;

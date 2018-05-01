@@ -14,5 +14,9 @@ namespace Lab_3___Invaders
         Right,
         Up,
         Down,
+		Down20L,
+		Down20R,
+		Down40L,
+		Down40R,
     }
 }

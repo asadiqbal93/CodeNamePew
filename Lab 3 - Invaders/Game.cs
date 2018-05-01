@@ -33,9 +33,20 @@ namespace Lab_3___Invaders
 		private Alien boss;
 		private const int bossWave = 2; //TODO: Change the boss level here
 
+		//TODO: Remove this section after reading
+		/*
+			// For the boss, it does not require XSpacing, YSpacing and List as we are not displaying the boss
+			// like the normal aliens which has rows and columns. We only displaying ONE boss.
+				private Direction alienDirection;   
+				private const int alienXSpacing = 60;
+		        private const int alienYSpacing = 60;
+		        private List<Alien> alien;
+		*/
+
         private PlayerShip playerShip;
         private List<Shot> playerShots;
-        private List<Shot> invaderShots;
+	    private List<Shot> invaderShots;
+		private List<Shot> bossShots;
 
         private PointF scoreLocation;
         private PointF livesLocation;
@@ -81,6 +92,7 @@ namespace Lab_3___Invaders
                 new Point((formArea.Width / 2), (formArea.Height - 50)));
             playerShots = new List<Shot>();
             invaderShots = new List<Shot>();
+			bossShots = new List<Shot>();
             invaders = new List<Invader>();
 			boss = new Alien(new Point(120, 50), 10);
             ui = Properties.Resources.GameUI;
@@ -100,6 +112,11 @@ namespace Lab_3___Invaders
             graphics.FillRectangle(Brushes.Black, formArea);
             
             stars.Draw(graphics);
+
+			//TODO: Remove this section after reading
+			/*
+				Only draw the boss when reach the bossWa
+			*/
 			// Only draw the small invaders when it is not bossWave
 			if (wave != bossWave)
 			{
@@ -110,10 +127,13 @@ namespace Lab_3___Invaders
 			{
 				boss.Draw(graphics, frame);
 			}
+
             playerShip.Draw(graphics);
             foreach (Shot shot in playerShots)
                 shot.Draw(graphics);
             foreach (Shot shot in invaderShots)
+                shot.Draw(graphics);
+			foreach (Shot shot in bossShots)
                 shot.Draw(graphics);
 
             // UI drawing code
@@ -205,6 +225,7 @@ namespace Lab_3___Invaders
             if (playerShip.Alive)
             {
                 // Check to see if any shots are off screen, to be removed
+				// Player
                 List<Shot> deadPlayerShots = new List<Shot>();
                 foreach (Shot shot in playerShots)
                 {
@@ -214,6 +235,7 @@ namespace Lab_3___Invaders
                 foreach (Shot shot in deadPlayerShots)
                     playerShots.Remove(shot);
 
+				// Invaders
                 List<Shot> deadInvaderShots = new List<Shot>();
                 foreach (Shot shot in invaderShots)
                 {
@@ -223,6 +245,21 @@ namespace Lab_3___Invaders
                 foreach (Shot shot in deadInvaderShots)
                     invaderShots.Remove(shot);
 
+				// Boss
+				List<Shot> deadBossShots = new List<Shot>();
+				foreach (Shot shot in bossShots)
+                {
+                    if (!shot.Move())
+                        deadBossShots.Add(shot);
+                }
+                foreach (Shot shot in deadBossShots)
+                    bossShots.Remove(shot);
+
+
+				//TODO: Remove this section after reading
+				/*
+					Only move the normal aliens when the wave is not boss
+				*/
                 if (wave != bossWave)
 				{
                     moveInvaders();
@@ -310,6 +347,11 @@ namespace Lab_3___Invaders
                 currentGameFrame = 1;
         }
 
+
+		//TODO: Remove this section after reading
+		/*
+			Created this method to move the boss. Referring to the moveInvaders() above.
+		*/
 		/// <summary>
 		/// Move the boss method
 		/// </summary>
@@ -319,7 +361,8 @@ namespace Lab_3___Invaders
 			// if so change direction
 			if (bossDirection == Direction.Right)
 			{
-				if (boss.Location.X > (formArea.Width - 140))
+				//TODO: If boss size changed, change number to be minus from the formArea.Width
+				if (boss.Location.X > (formArea.Width - 290))
 				{
 					bossDirection = Direction.Left;
 					//boss.Move(Direction.Down);
@@ -388,6 +431,50 @@ namespace Lab_3___Invaders
 				formArea);
 				invaderShots.Add(newShot);
 			}
+			else
+			{
+				if (bossShots.Count > 10)
+                return;
+
+				int randomNo = random.Next(3);
+
+				Point newShotLocation = new Point(boss.Location.X + (boss.Area.Width / 2),
+									  boss.Location.Y + boss.Area.Height - 35);
+
+				// Different shooting patterns for boss
+				switch(randomNo)
+				{
+					case 1:
+					{
+						Shot newBossShot = new Shot(newShotLocation, Direction.Down, formArea);
+						Shot newBossShot2 = new Shot(newShotLocation, Direction.Down20L, formArea);
+						Shot newBossShot3 = new Shot(newShotLocation, Direction.Down20R, formArea);
+
+						bossShots.Add(newBossShot);
+						bossShots.Add(newBossShot2);
+						bossShots.Add(newBossShot3);
+
+						break;
+					}
+
+					case 2:
+					{
+						Shot newBossShot = new Shot(newShotLocation, Direction.Down, formArea);
+						Shot newBossShot2 = new Shot(newShotLocation, Direction.Down20L, formArea);
+						Shot newBossShot3 = new Shot(newShotLocation, Direction.Down20R, formArea);
+						Shot newBossShot4 = new Shot(newShotLocation, Direction.Down40L, formArea);
+						Shot newBossShot5 = new Shot(newShotLocation, Direction.Down40R, formArea);
+
+						bossShots.Add(newBossShot);
+						bossShots.Add(newBossShot2);
+						bossShots.Add(newBossShot3);
+						bossShots.Add(newBossShot4);
+						bossShots.Add(newBossShot5);
+
+						break;
+					}
+				}
+			}
         }
 
         /// <summary>
@@ -399,6 +486,7 @@ namespace Lab_3___Invaders
             // removed from a list while enumerating through it
             List<Shot> deadPlayerShots = new List<Shot>();
             List<Shot> deadInvaderShots = new List<Shot>();
+			List<Shot> deadBossShots = new List<Shot>();
 
             foreach (Shot shot in invaderShots)
             {
@@ -421,6 +509,31 @@ namespace Lab_3___Invaders
 					}
                 }
             }
+
+			if (wave == bossWave)
+			{
+				foreach (Shot bossShot in bossShots)
+				{
+					if (playerShip.Area.Contains(bossShot.Location))
+					{
+						deadBossShots.Add(bossShot);
+						livesLeft--;
+						playerShip.Alive = false;
+						if (livesLeft == 0)
+						{
+							GameOver(this, null);
+
+							// Once game is over play Game OVER sound
+							gameOverSoundPlayer.Play();
+						}
+						else
+						{
+							// Asad : Sound Player plays the sound once the playerShip is killed
+							playerShipDeadSoundPlayer.Play();
+						}
+					}
+				}
+			}
 
             foreach (Shot shot in playerShots)
             {
@@ -447,11 +560,24 @@ namespace Lab_3___Invaders
 						}
 					}
 				}
+				else
+				{
+					if (boss.Area.Contains(shot.Location))
+					{
+						deadBossShots.Add(shot);
+						//TODO: change scoring method for shooting on boss
+						score = score + (1 * wave);
+						playerShots.Remove(shot);
+						return;
+					}
+				}
             }
             foreach (Shot shot in deadPlayerShots)
                 playerShots.Remove(shot);
             foreach (Shot shot in deadInvaderShots)
                 invaderShots.Remove(shot);
+ 			foreach (Shot shot in deadBossShots)
+				bossShots.Remove(shot);
         }
         /// <summary>
         /// Next wave method
@@ -459,13 +585,14 @@ namespace Lab_3___Invaders
         private void nextWave()
         {
 			// Make sure the invaders is all cleared
-			if (invaders.Count > 1)
-			{
-				foreach (Invader invader in invaders)
-				{
-					invaders.Remove(invader);
-				}
-			}
+			//if (invaders.Count > 1)
+			//{
+			//	foreach (Invader invader in invaders)
+			//	{
+			//		invaders.Remove(invader);
+			//	}
+			//}
+			invaders.Clear();
 
             wave++;
             Random rnd = new Random(); //Lee: Created the random generator and the IF-ELSE statement so that when a new wave begins,

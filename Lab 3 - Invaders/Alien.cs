@@ -20,7 +20,8 @@ namespace Lab_3___Invaders
         private Bitmap image;
 		private Bitmap[] imageArray;
 
-        public Point Location {
+        public Point Location
+		{
             get;
             private set;
         }
@@ -33,20 +34,23 @@ namespace Lab_3___Invaders
 			}	
 		}
 
-        public int Score {
+        public int Score
+		{
             get;
             private set;
         }
 
-        public Alien(Point location, int score){
+        public Alien(Point location, int score)
+		{
             this.Location = location;
             this.Score = score;
+
             createInvaderBitmapArray();
 			image = imageArray[0];
         }
 
-        public void Move(Direction direction) {
-
+        public void Move(Direction direction)
+		{
             switch (direction)
             {
                 case Direction.Right:
@@ -77,6 +81,7 @@ namespace Lab_3___Invaders
 			//DEBUG red square invaders
 			//graphics.FillRectangle(Brushes.Red,
 			//    Location.X, Location.Y, 20, 20);
+			//graphics.DrawRectangle((new Pen(Color.Red)), Area);
 			return bossGraphics;
 		}
 
@@ -84,17 +89,31 @@ namespace Lab_3___Invaders
 		{
 			imageArray = new Bitmap[4];
 
-			imageArray[0] = Properties.Resources.boss1;
-			imageArray[1] = Properties.Resources.boss2;
-			imageArray[2] = Properties.Resources.boss3;
-			imageArray[3] = Properties.Resources.boss4;
+			// Create images bitmap invidually to maintain its original size
+			Bitmap img1 = new Bitmap(Properties.Resources.boss1);
+			Bitmap img2 = new Bitmap(Properties.Resources.boss2);
+			Bitmap img3 = new Bitmap(Properties.Resources.boss3);
+			Bitmap img4 = new Bitmap(Properties.Resources.boss4);
+
+			//imageArray[0] = Properties.Resources.boss1;
+			//imageArray[1] = Properties.Resources.boss2;
+			//imageArray[2] = Properties.Resources.boss3;
+			//imageArray[3] = Properties.Resources.boss4;
+
+			imageArray[0] = img1;
+			imageArray[1] = img2;
+			imageArray[2] = img3;
+			imageArray[3] = img4;
 		}
 
         // Method closed for Alien Health logic
-        public double AlienHealth() {
+        public double AlienHealth()
+		{
             return 0;
         }
-        public void createAlien() {
+
+        public void createAlien()
+		{
             //Method to create the Alien
         }
     }
